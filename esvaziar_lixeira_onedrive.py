@@ -37,7 +37,7 @@ def esvaziar_lixeira():
     selector = "#appRoot > div > div.body_c231eeb7.ready_c231eeb7 > div > div > div.core_c231eeb7 > div.view_c231eeb7 > main > div > div > div > div > div.StandaloneList-content.is-active > div > div.EmptyFolder > div:nth-child(2) > div.EmptyFolder-title"
     clicar_botao(driver, selector, 300)
     
-    print("Acesso ao Google realizado com sucesso.")
+    print("sucesso.")
 
 def clicar_botao(driver, selector, timeout = 10):
     button = WebDriverWait(driver, timeout).until(
