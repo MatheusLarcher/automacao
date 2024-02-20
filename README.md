@@ -15,7 +15,7 @@ Primeiro, clone o repositório para sua máquina local:
 git clone https://github.com/matheuslarcher20/automacao.git
 cd automacao
 pip install selenium webdriver-manager
-python esvaziar_lixeira.py
+python esvaziar_lixeira_onedrive.py
 
 
 
@@ -47,11 +47,11 @@ bash
 Copy code
 pip install selenium webdriver-manager
 Uso
-Para executar o script esvaziar_lixeira.py, primeiro certifique-se de atualizar o caminho absoluto para o diretório do perfil do usuário no script. Depois, execute o seguinte comando no terminal:
+Para executar o script esvaziar_lixeira_onedrive.py, primeiro certifique-se de atualizar o caminho absoluto para o diretório do perfil do usuário no script. Depois, execute o seguinte comando no terminal:
 
 bash
 Copy code
-python esvaziar_lixeira.py
+python esvaziar_lixeira_onedrive.py
 Notas Importantes
 Certifique-se de que o ChromeDriver compatível com a versão do seu navegador Chrome está instalado.
 Atualize a variável absolute_path_to_profile no script para refletir o caminho do seu perfil do usuário do Chrome.
