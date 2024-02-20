@@ -73,6 +73,16 @@ def obter_valor_textbox(seletor):
     texto = elemento.text
     return texto
 
+def obter_data_atualizacao(seletor):
+    elemento = WebDriverWait(driver, 20).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, seletor))
+    )
+    texto_completo = elemento.text
+    prefixo = "Data Atualização: "
+    if texto_completo.startswith(prefixo):
+        data_atualizacao = texto_completo[len(prefixo):]
+        return data_atualizacao
+    
 def obter_data_att(workspace, empresa):
     driver.get(f"https://app.powerbi.com/groups/{workspace}/list?experience=power-bi")
 
@@ -86,14 +96,14 @@ def obter_data_att(workspace, empresa):
     seletor = "#content > tri-shell > tri-item-renderer > tri-extension-page-outlet > div:nth-child(2) > report > exploration-container > div > div > docking-container > div > div > exploration-fluent-navigation > section > nav > mat-action-list > button.mat-list-item.mat-focus-indicator.exploration-fluent-li.item.trimmedTextWithEllipsis.fluentTheme-sm-reg.selected.ng-star-inserted"
     clicar_botao(seletor)
     
-    seletor = "#pvExplorationHost > div > div > exploration > div > explore-canvas > div > div.canvasFlexBox > div > div.displayArea.disableAnimations.fitToPage > div.visualContainerHost.visualContainerOutOfFocus > visual-container-repeat > visual-container:nth-child(1) > transform > div.visualContainer.unselectable.noVisualTitle.visualHeaderAbove.droppableElement.ui-droppable.readMode.hideBorder > div.visualContent > div > div > visual-modern > div > svg > g:nth-child(1) > text"
-    valor = obter_valor_textbox(seletor)
+    seletor = "text.value"
+    valor = obter_data_atualizacao(seletor)
     
     
     print(valor)
 
 if __name__ == "__main__":
-    obter_data_att('me', 'Golfinho - Plataforma 2D')
+    obter_data_att('me', 'Columbia - Plataforma 2D')
 
 
 ##7 Lagoas - Plataforma 2D
