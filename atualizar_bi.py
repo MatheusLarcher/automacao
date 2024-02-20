@@ -104,6 +104,7 @@ def obter_data_att(workspace, empresa):
 
 if __name__ == "__main__":
     obter_data_att('me', 'Columbia - Plataforma 2D')
+    driver.close()
 
 
 ##7 Lagoas - Plataforma 2D
