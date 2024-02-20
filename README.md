@@ -12,7 +12,6 @@ Este projeto utiliza o Selenium para automatizar o processo de esvaziar a lixeir
 
 Primeiro, clone o repositório para sua máquina local:
 
-```bash
 git clone https://github.com/matheuslarcher20/automacao.git
 cd automacao
 pip install selenium webdriver-manager
