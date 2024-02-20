@@ -31,8 +31,9 @@ def atualizar_bi_empresa(workspace, empresa):
     seletor = "[data-testid='item-name']"
     
     passar_mouse_sobre_segundo_campo(seletor)
-    #       PAROU AQUI              ##############
-    print('ok')
+    
+    seletor = "#artifactContentView > div.cdk-virtual-scroll-content-wrapper > div:nth-child(3) > div:nth-child(2) > div > span > button:nth-child(2) > mat-icon"
+    clicar_botao(seletor)
 
 def clicar_botao(selector, timeout = 10):
     button = WebDriverWait(driver, timeout).until(
@@ -50,9 +51,7 @@ def passar_mouse_elemento(seletor):
     
 
 def passar_mouse_sobre_segundo_campo(seletor):
-    elementos = WebDriverWait(driver, 10).until(
-    EC.presence_of_element_located((By.CSS_SELECTOR, seletor))
-    )    
+    elementos = driver.find_elements(By.CSS_SELECTOR, seletor)
     if len(elementos) >= 2:
         elemento_para_hover = elementos[1]
         action = ActionChains(driver)
@@ -67,7 +66,35 @@ def digitar_valor_textbox(selector, texto_entrada, timeout = 10):
     )
     textbox.send_keys(texto_entrada)
 
+def obter_valor_textbox(seletor):
+    elemento = WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.CSS_SELECTOR, seletor))
+    )
+    texto = elemento.text
+    return texto
+
+def obter_data_att(workspace, empresa):
+    driver.get(f"https://app.powerbi.com/groups/{workspace}/list?experience=power-bi")
+
+    seletor = "#content > tri-shell > tri-item-renderer > tri-extension-page-outlet > div:nth-child(2) > workspace-view > tri-workspace-view > tri-workspace-action-base > div > tri-list-filter > div > tri-search-box > input[type=text]"
+    digitar_valor_textbox(seletor, empresa)
+    
+    #abrir bi
+    seletor = "[data-testid='item-name']"
+    clicar_botao(seletor)
+    
+    seletor = "#content > tri-shell > tri-item-renderer > tri-extension-page-outlet > div:nth-child(2) > report > exploration-container > div > div > docking-container > div > div > exploration-fluent-navigation > section > nav > mat-action-list > button.mat-list-item.mat-focus-indicator.exploration-fluent-li.item.trimmedTextWithEllipsis.fluentTheme-sm-reg.selected.ng-star-inserted"
+    clicar_botao(seletor)
+    
+    seletor = "#pvExplorationHost > div > div > exploration > div > explore-canvas > div > div.canvasFlexBox > div > div.displayArea.disableAnimations.fitToPage > div.visualContainerHost.visualContainerOutOfFocus > visual-container-repeat > visual-container:nth-child(1) > transform > div.visualContainer.unselectable.noVisualTitle.visualHeaderAbove.droppableElement.ui-droppable.readMode.hideBorder > div.visualContent > div > div > visual-modern > div > svg > g:nth-child(1) > text"
+    valor = obter_valor_textbox(seletor)
+    
+    
+    print(valor)
+
 if __name__ == "__main__":
-    atualizar_bi_empresa('me', '27 de setembro - Plataforma 2D')
+    obter_data_att('me', 'Golfinho - Plataforma 2D')
 
 
+##7 Lagoas - Plataforma 2D
+#Altese - Plataforma 2D
