@@ -63,8 +63,7 @@ Contribuições para o projeto são bem-vindas. Sinta-se livre para forkar o rep
 Licença
 Este projeto está licenciado sob a MIT License - veja o arquivo LICENSE.md para detalhes.
 
-Contato
-Matheus Larcher - @matheuslarcher20
-https://www.linkedin.com/in/matheus-larcher-6215b1179/
-https://lambda-ai.durable.co/pt
+## Contato
 
+- Matheus Larcher no GitHub: [matheuslarcher20](https://github.com/matheuslarcher20)
+- LinkedIn: [Matheus Larcher](https://www.linkedin.com/in/matheus-larcher-6215b1179/)
