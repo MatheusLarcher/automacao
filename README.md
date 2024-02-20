@@ -66,3 +66,4 @@ Este projeto está licenciado sob a MIT License - veja o arquivo LICENSE.md para
 
 - Matheus Larcher no GitHub: [matheuslarcher20](https://github.com/matheuslarcher20)
 - LinkedIn: [Matheus Larcher](https://www.linkedin.com/in/matheus-larcher-6215b1179/)
+- LinkedIn: [Site](https://lambda-ai.durable.co/pt)
