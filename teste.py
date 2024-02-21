@@ -6,6 +6,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import re
+from selenium.common.exceptions import TimeoutException
+import pandas as pd
+#from atualizar_bi import obter_data_att
+import os
+import sys
 
 def esvaziar_lixeira():
     # Caminho onde será salvo os caches do navegador
@@ -54,8 +60,36 @@ def verificar_lixeira_vazia(driver):
         return True
     else:
         return False
+
+def atualizar_controle_empresas():
+    if getattr(sys, 'frozen', False):
+        diretorio_atual = os.path.dirname(sys.executable)
+    else:
+        diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+
+    print(diretorio_atual)
+    nome_arquivo = "Controle Atualizações.xlsx"
+    caminho_completo = os.path.join(diretorio_atual, nome_arquivo)
+
+    if not os.path.exists(caminho_completo):
+        df = pd.DataFrame(columns=['Workspace', 'Empresa', 'data_att'])
+        df.to_excel(caminho_completo, index=False)
+        print('Cadastre as empresa no arquivo: Controle Atualizações.xlsx ')
+        sys.exit(0)
+
+    data_empresas = pd.read_excel(caminho_completo)
+    lista_empresas = []
+
+    for indice, empresa in data_empresas.iterrows():
+        workspace = empresa['Workspace']
+        data_att =  'a'  # obter_data_att(workspace, empresa['Empresa'])
+        dados_empresa = {'Workspace': workspace, 'Empresa': empresa['Empresa'], 'data_att': data_att}
+        lista_empresas.append(dados_empresa)
+
+    df_empresas = pd.DataFrame(lista_empresas)
+    df_empresas.to_excel(caminho_completo, index=False)
     
 if __name__ == "__main__":
-    esvaziar_lixeira()
+    atualizar_controle_empresas()
 
 

@@ -7,6 +7,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.common.action_chains import ActionChains
+import re
+from selenium.common.exceptions import TimeoutException
 
 # Specify the absolute path to your profile directory
 absolute_path_to_profile = "/absolute/path/to/userData"
@@ -35,7 +37,7 @@ def atualizar_bi_empresa(workspace, empresa):
     seletor = "#artifactContentView > div.cdk-virtual-scroll-content-wrapper > div:nth-child(3) > div:nth-child(2) > div > span > button:nth-child(2) > mat-icon"
     clicar_botao(seletor)
 
-def clicar_botao(selector, timeout = 10):
+def clicar_botao(selector, timeout = 30):
     button = WebDriverWait(driver, timeout).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
     )
@@ -59,7 +61,7 @@ def passar_mouse_sobre_segundo_campo(seletor):
     else:
         print("Menos de dois elementos encontrados.")
         
-        
+
 def digitar_valor_textbox(selector, texto_entrada, timeout = 10):
     textbox = WebDriverWait(driver, timeout).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, selector))
@@ -73,15 +75,27 @@ def obter_valor_textbox(seletor):
     texto = elemento.text
     return texto
 
-def obter_data_atualizacao(seletor):
-    elemento = WebDriverWait(driver, 20).until(
-    EC.presence_of_element_located((By.CSS_SELECTOR, seletor))
-    )
-    texto_completo = elemento.text
-    prefixo = "Data Atualização: "
-    if texto_completo.startswith(prefixo):
-        data_atualizacao = texto_completo[len(prefixo):]
-        return data_atualizacao
+        
+def obter_valor_dt_att(seletor, timeout=20):
+    try:
+        end_time = time.time() + timeout
+        while True:
+            elementos = driver.find_elements(By.CSS_SELECTOR, seletor)
+            for elemento in elementos:
+                texto_completo = elemento.text
+                prefixo = "Data Atualização: "
+                if texto_completo.startswith(prefixo):
+                    data_atualizacao = texto_completo[len(prefixo):]
+                    if re.match(r'\d{2}/\d{2}/\d{4}', data_atualizacao):
+                        return data_atualizacao
+            if time.time() > end_time:
+                break
+            time.sleep(1)  # Espera um pouco antes de tentar novamente para não sobrecarregar
+        raise TimeoutException(f"Texto com data de atualização não encontrado após {timeout} segundos.")
+    except TimeoutException as e:
+        print(e)
+        return None
+    
     
 def obter_data_att(workspace, empresa):
     driver.get(f"https://app.powerbi.com/groups/{workspace}/list?experience=power-bi")
@@ -97,15 +111,9 @@ def obter_data_att(workspace, empresa):
     clicar_botao(seletor)
     
     seletor = "text.value"
-    valor = obter_data_atualizacao(seletor)
+    valor = obter_valor_dt_att(seletor)
     
-    
-    print(valor)
-
-if __name__ == "__main__":
-    obter_data_att('me', 'Columbia - Plataforma 2D')
-    driver.close()
-
+    return valor
 
 ##7 Lagoas - Plataforma 2D
 #Altese - Plataforma 2D
