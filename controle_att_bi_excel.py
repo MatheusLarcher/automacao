@@ -25,13 +25,19 @@ def atualizar_controle_empresas():
     lista_empresas = []
 
     for indice, empresa in data_empresas.iterrows():
-        workspace = empresa['Workspace']
-        data_att = obter_data_att(workspace, empresa['Empresa'])
-        dados_empresa = {'Workspace': workspace, 'Empresa': empresa['Empresa'], 'data_att': data_att}
-        lista_empresas.append(dados_empresa)
+        try:
+            workspace = empresa['Workspace']
+            data_att = obter_data_att(workspace, empresa['Empresa'])
+            dados_empresa = {'Workspace': workspace, 'Empresa': empresa['Empresa'], 'data_att': data_att}
+            lista_empresas.append(dados_empresa)
+        except Exception as e:
+            print(f"Erro ao processar empresa {empresa['Empresa']}: {e}")
 
-    df_empresas = pd.DataFrame(lista_empresas)
-    df_empresas.to_excel(caminho_completo, index=False)
+    try:
+        df_empresas = pd.DataFrame(lista_empresas)
+        df_empresas.to_excel(caminho_completo, index=False)
+    except Exception as e:
+        print(f"Erro ao salvar os dados das empresas no arquivo: {e}")
 
 # Chama a função para executar o processo
 atualizar_controle_empresas()

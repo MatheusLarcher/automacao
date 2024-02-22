@@ -96,6 +96,9 @@ def obter_valor_dt_att(seletor, timeout=20):
         print(e)
         return None
     
+def fechar_bi_barra_esquerda():
+    passar_mouse_elemento('#leftNavPane > div > div > tri-navbar-tab-item')
+    clicar_botao('#leftNavPane > div > div > tri-navbar-tab-item > tri-navbar-label-item > button > div > tri-svg-icon.top-right-icon.close-button.ng-star-inserted')
     
 def obter_data_att(workspace, empresa):
     driver.get(f"https://app.powerbi.com/groups/{workspace}/list?experience=power-bi")
@@ -112,8 +115,10 @@ def obter_data_att(workspace, empresa):
     
     seletor = "text.value"
     valor = obter_valor_dt_att(seletor)
+    fechar_bi_barra_esquerda()
     
     return valor
+    
 
 ##7 Lagoas - Plataforma 2D
 #Altese - Plataforma 2D
