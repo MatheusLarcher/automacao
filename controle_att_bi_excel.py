@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import sys
+from datetime import datetime
 
 def atualizar_controle_empresas():
     if getattr(sys, 'frozen', False):
@@ -28,7 +29,7 @@ def atualizar_controle_empresas():
         try:
             workspace = empresa['Workspace']
             data_att = obter_data_att(workspace, empresa['Empresa'])
-            dados_empresa = {'Workspace': workspace, 'Empresa': empresa['Empresa'], 'data_att': data_att}
+            dados_empresa = {'Workspace': workspace, 'Empresa': empresa['Empresa'], 'Data Atualização Dados': data_att, 'Data Verificação': datetime.now()}
             lista_empresas.append(dados_empresa)
         except Exception as e:
             print(f"Erro ao processar empresa {empresa['Empresa']}: {e}")
