@@ -26,13 +26,16 @@ def atualizar_controle_empresas():
     lista_empresas = []
 
     for indice, empresa in data_empresas.iterrows():
+        workspace = empresa.get('Workspace', '')
+        empresa = empresa.get('Empresa', '')
         try:
-            workspace = empresa['Workspace']
-            data_att = obter_data_att(workspace, empresa['Empresa'])
-            dados_empresa = {'Workspace': workspace, 'Empresa': empresa['Empresa'], 'Data Atualização Dados': data_att, 'Data Verificação': datetime.now()}
-            lista_empresas.append(dados_empresa)
-        except Exception as e:
-            print(f"Erro ao processar empresa {empresa['Empresa']}: {e}")
+            data_att = obter_data_att(workspace, empresa)
+        except:
+            data_att = ''
+        dados_empresa = {'Workspace': workspace, 'Empresa': empresa, 'Data Atualização Dados': data_att, 'Data Verificação': datetime.now()}
+
+        
+        lista_empresas.append(dados_empresa)
 
     try:
         df_empresas = pd.DataFrame(lista_empresas)

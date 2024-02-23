@@ -101,23 +101,26 @@ def fechar_bi_barra_esquerda():
     clicar_botao('#leftNavPane > div > div > tri-navbar-tab-item > tri-navbar-label-item > button > div > tri-svg-icon.top-right-icon.close-button.ng-star-inserted')
     
 def obter_data_att(workspace, empresa):
-    driver.get(f"https://app.powerbi.com/groups/{workspace}/list?experience=power-bi")
+    try:
+        driver.get(f"https://app.powerbi.com/groups/{workspace}/list?experience=power-bi")
 
-    seletor = "#content > tri-shell > tri-item-renderer > tri-extension-page-outlet > div:nth-child(2) > workspace-view > tri-workspace-view > tri-workspace-action-base > div > tri-list-filter > div > tri-search-box > input[type=text]"
-    digitar_valor_textbox(seletor, empresa)
-    
-    #abrir bi
-    seletor = "[data-testid='item-name']"
-    clicar_botao(seletor)
-    
-    seletor = "#content > tri-shell > tri-item-renderer > tri-extension-page-outlet > div:nth-child(2) > report > exploration-container > div > div > docking-container > div > div > exploration-fluent-navigation > section > nav > mat-action-list > button.mat-list-item.mat-focus-indicator.exploration-fluent-li.item.trimmedTextWithEllipsis.fluentTheme-sm-reg.selected.ng-star-inserted"
-    clicar_botao(seletor)
-    
-    seletor = "text.value"
-    valor = obter_valor_dt_att(seletor)
-    fechar_bi_barra_esquerda()
-    
-    return valor
+        seletor = "#content > tri-shell > tri-item-renderer > tri-extension-page-outlet > div:nth-child(2) > workspace-view > tri-workspace-view > tri-workspace-action-base > div > tri-list-filter > div > tri-search-box > input[type=text]"
+        digitar_valor_textbox(seletor, empresa)
+        
+        #abrir bi
+        seletor = "[data-testid='item-name']"
+        clicar_botao(seletor)
+        
+        seletor = "#content > tri-shell > tri-item-renderer > tri-extension-page-outlet > div:nth-child(2) > report > exploration-container > div > div > docking-container > div > div > exploration-fluent-navigation > section > nav > mat-action-list > button.mat-list-item.mat-focus-indicator.exploration-fluent-li.item.trimmedTextWithEllipsis.fluentTheme-sm-reg.selected.ng-star-inserted"
+        clicar_botao(seletor)
+        
+        seletor = "text.value"
+        valor = obter_valor_dt_att(seletor)
+        fechar_bi_barra_esquerda()
+        return valor
+    except Exception as e:
+        return f"Erro ao obter data"
+
     
 
 ##7 Lagoas - Plataforma 2D
