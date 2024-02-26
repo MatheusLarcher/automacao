@@ -11,12 +11,17 @@ import re
 from selenium.common.exceptions import TimeoutException
 
 # Specify the absolute path to your profile directory
-absolute_path_to_profile = "/absolute/path/to/userData"
+absolute_path_to_profile = "C:\\Users\\Rafael\\AppData\\Local\\Google\\Chrome\\User Data"
+#/absolute/path/to/userData"#
 
 chrome_options = Options()
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
-#chrome_options.add_argument("--headless")
+
+chrome_options.add_argument("--headless")
+#chrome_options.add_argument("--disable-web-security")
+#chrome_options.add_argument("--allow-running-insecure-content")
+
 chrome_options.add_argument(f"user-data-dir={absolute_path_to_profile}")  # Use the absolute path
 chrome_options.add_argument("profile-directory=Profile 1")
 
