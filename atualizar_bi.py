@@ -127,8 +127,9 @@ def obter_data_att(workspace, empresa):
             driver.quit()
             driver = iniciar_navegador(False)
             driver.get(f"https://app.powerbi.com/groups/{workspace}/list?experience=power-bi")
-                
-        seletor = "#content > tri-shell > tri-item-renderer > tri-extension-page-outlet > div:nth-child(2) > workspace-view > tri-workspace-view > tri-workspace-action-base > div > tri-list-filter > div > tri-search-box > input[type=text]"
+
+        #textbox pra buscar BI       
+        seletor = "div.tri-list-filter-container input[data-testid='tri-search-box']"
         digitar_valor_textbox(driver, seletor, empresa, 120)
         
         #abrir bi
