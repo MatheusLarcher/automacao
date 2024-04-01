@@ -35,27 +35,23 @@ def esvaziar_lixeira(headless = False):
 
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-    driver.get("https://2dconsultorescombr-my.sharepoint.com/personal/jean_2dconsultores_com_br/_layouts/15/onedrive.aspx?view=1")
+    driver.get("https://2dconsultorescombr-my.sharepoint.com/personal/jean_2dconsultores_com_br/_layouts/15/onedrive.aspx?view=5")
 
   #  if verificar_tela_login(driver):
    #     esvaziar_lixeira(False)
-
-    #clicar botao ao lado
-    selector = "#spartan-left-nav > div.navLowerContainer_4c106af6 > div:nth-child(2) > ul > li:nth-child(5) > div"
-    clicar_botao(driver, selector, 60)
     
     if(verificar_lixeira_vazia(driver)):
         return
     
     #botao Esvaziar lixeira
     selector = 'button[aria-label="Esvaziar lixeira"]'
-    clicar_botao(driver, selector, 100)
+    clicar_botao(driver, selector, 10)
     
     #botao confirmar
-    selector = "#appRoot > div > div > div:nth-child(3) > div.od-OverlayHost > div > div > div.od-Dialog.od-Dialog--close > div.od-Dialog-main.od-Dialog-main--sm.od-Dialog-main-style--normal.od-Dialog-main--allowPanel.od-Dialog-main--dialog.od-Dialog-main--visible > div > div > div.od-Dialog-inner > div.od-Dialog-actions > div > button:nth-child(1)"
+    selector = "#appRoot > div > div > div:nth-child(4) > div.od-OverlayHost > div > div > div.od-Dialog.od-Dialog--close > div.od-Dialog-main.od-Dialog-main--sm.od-Dialog-main-style--normal.od-Dialog-main--allowPanel.od-Dialog-main--dialog.od-Dialog-main--visible > div > div > div.od-Dialog-inner > div.od-Dialog-actions > div > button:nth-child(1)"
     clicar_botao(driver, selector)
     
-    selector = "#appRoot > div > div.body_c231eeb7.ready_c231eeb7 > div > div > div.core_c231eeb7 > div.view_c231eeb7 > main > div > div > div > div > div.StandaloneList-content.is-active > div > div.EmptyFolder > div:nth-child(2) > div.EmptyFolder-title"
+    selector = "#appRoot > div > div > div.body_68bb4b5e.ready_68bb4b5e > div > div > div.core_68bb4b5e > div.view_68bb4b5e > main > div > div > div > div > div.StandaloneList-content.is-active > div > div.EmptyFolder > div:nth-child(1) > div"
     clicar_botao(driver, selector, 300)
     
     print("sucesso.")
