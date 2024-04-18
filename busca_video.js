@@ -14,11 +14,11 @@ async function findUrlsm3u8(url, regex) {
         
         const page = await browser.newPage();
 
-        await page.goto(url);
+        await page.goto(url, { waitUntil: 'networkidle2' });
 
         const content = await page.content();
-        const m3u8Urls = content.match(regex);
 
+        const m3u8Urls = content.match(regex);
         return m3u8Urls || [];
     } catch (error) {
         console.error('Error extracting M3U8 URLs:', error);
