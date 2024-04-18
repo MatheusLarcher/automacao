@@ -8,9 +8,9 @@ dialog = Desktop(backend='uia').window(title='OpenVPN Connect', found_index=0)
 dialog.wait('visible')
 
         
-def conectar_vpn(nome_vpn):    
-    vpn_button = dialog.child_window(title="widmen", control_type="Group").wrapper_object()
-    vpn_button.invoke()
+def conectar_vpn(nome_vpn):
+    vpn_button = dialog.child_window(title_re=".*widmen.*:")
+    vpn_button[1].invoke()
     
 def desconectar_vpn(nome_vpn):
     # Navigate to the specific group control and invoke it
