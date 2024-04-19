@@ -37,8 +37,6 @@ def esvaziar_lixeira(headless = False):
 
     driver.get("https://2dconsultorescombr-my.sharepoint.com/personal/jean_2dconsultores_com_br/_layouts/15/onedrive.aspx?view=5")
 
-  #  if verificar_tela_login(driver):
-   #     esvaziar_lixeira(False)
     
     if(verificar_lixeira_vazia(driver)):
         return
@@ -48,11 +46,11 @@ def esvaziar_lixeira(headless = False):
     clicar_botao(driver, selector, 10)
     
     #botao confirmar
-    selector = "#appRoot > div > div > div:nth-child(4) > div.od-OverlayHost > div > div > div.od-Dialog.od-Dialog--close > div.od-Dialog-main.od-Dialog-main--sm.od-Dialog-main-style--normal.od-Dialog-main--allowPanel.od-Dialog-main--dialog.od-Dialog-main--visible > div > div > div.od-Dialog-inner > div.od-Dialog-actions > div > button:nth-child(1)"
+    selector = "#appRoot > div > div:nth-child(3) > div.od-OverlayHost > div > div > div.od-Dialog.od-Dialog--close > div.od-Dialog-main.od-Dialog-main--sm.od-Dialog-main-style--normal.od-Dialog-main--allowPanel.od-Dialog-main--dialog.od-Dialog-main--visible > div > div > div.od-Dialog-inner > div.od-Dialog-actions > div > button:nth-child(1)"
     clicar_botao(driver, selector)
     
-    selector = "#appRoot > div > div > div.body_68bb4b5e.ready_68bb4b5e > div > div > div.core_68bb4b5e > div.view_68bb4b5e > main > div > div > div > div > div.StandaloneList-content.is-active > div > div.EmptyFolder > div:nth-child(1) > div"
-    clicar_botao(driver, selector, 300)
+    if(verificar_lixeira_vazia(driver)):
+        driver.close()
     
     print("sucesso.")
 
@@ -64,9 +62,8 @@ def clicar_botao(driver, selector, timeout = 10):
 
 def verificar_lixeira_vazia(driver):
     time.sleep(2)
-    selector = "#appRoot > div > div.body_c231eeb7.ready_c231eeb7 > div > div > div.core_c231eeb7 > div.view_c231eeb7 > main > div > div > div > div > div.StandaloneList-content.is-active > div > div.EmptyFolder > div:nth-child(2) > div.EmptyFolder-title"
+    selector = "#appRoot > div > div.body_68bb4b5e.ready_68bb4b5e > div > div > div.core_68bb4b5e > div.view_68bb4b5e > main > div > div > div > div > div.StandaloneList-content.is-active > div > div.EmptyFolder > div:nth-child(1)"
     elements = driver.find_elements(By.CSS_SELECTOR, selector)
-    
     if len(elements) > 0:
         return True
     else:
@@ -74,5 +71,3 @@ def verificar_lixeira_vazia(driver):
     
 if __name__ == "__main__":
     esvaziar_lixeira()
-
-

@@ -15,7 +15,7 @@ function delay(ms) {
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
         userDataDir: userDataDir, // Certifique-se de que 'userDataDir' está definido corretamente
         executablePath: executablePath,
-        headless: false,
+        headless: 'new',
         locale: 'pt-BR'
     });
     const page = await browser.newPage();
