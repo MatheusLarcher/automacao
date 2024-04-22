@@ -41,6 +41,7 @@ def esvaziar_lixeira(headless = False):
     if(verificar_lixeira_vazia(driver)):
         return
     
+    
     #botao Esvaziar lixeira
     selector = 'button[aria-label="Esvaziar lixeira"]'
     clicar_botao(driver, selector, 10)

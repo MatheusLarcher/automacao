@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 
 const { exec } = require('child_process');
 const path = require('path');
+const fs = require('fs').promises;
 
 async function findUrlsm3u8(browser, url, regex) {
     const page = await browser.newPage();
@@ -19,7 +20,7 @@ async function findUrlsm3u8(browser, url, regex) {
     }
     finally{
         await page.close();
-        delay(1000);
+        await delay(1000);
     }
 }
 
@@ -27,6 +28,7 @@ async function getAllHrefs(browser, url) {
     const page = await browser.newPage();
     try {
         await page.goto(url, { waitUntil: 'networkidle2' });
+
         const hrefs = await page.$$eval('a', anchors => anchors.map(anchor => anchor.href));
         return hrefs;
     } catch (error) {
@@ -34,7 +36,7 @@ async function getAllHrefs(browser, url) {
         return [];
     } finally {
         await page.close();
-        delay(2000);
+        await delay(2000);
     }
 }
 
@@ -42,7 +44,6 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const fs = require('fs').promises;
 
 async function createDirectoryIfNotExists(directoryPath) {
     try {
@@ -52,7 +53,7 @@ async function createDirectoryIfNotExists(directoryPath) {
     }
 }
 
-function baixa_mp4(url, nome_saida="")
+async function baixa_mp4(url, nome_saida="")
 {
     if(url.includes('_vtt.')){
         return;
@@ -65,21 +66,28 @@ function baixa_mp4(url, nome_saida="")
         outputFileName = path.join(__dirname, 'videos', url.substring(url.lastIndexOf('/') + 1).replace('.m3u8', '.mp4'));
     }
 
-    const command = `ffmpeg -protocol_whitelist file,http,https,tcp,tls,crypto -i "${url}" -c copy ${outputFileName}`;
+    const command = `ffmpeg -protocol_whitelist file,http,https,tcp,tls,crypto -i "${url}" -c copy "${outputFileName}"`;
 
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Erro ao executar o comando: ${error}`);
-            return;
-        }
-        if (stderr) {
-            console.error(`Erro no processo: ${stderr}`);
-            return;
-        }
-        console.log(`Saída: ${stdout}`);
-        console.log("Comando executado com sucesso e o arquivo foi salvo como 'output.mp4'");
-    });
+    
+    await appendToFile("url_m3u8.txt", command);
      
+}
+
+
+async function appendToFile(filePath, content) {
+    try {
+        // Verifica se o arquivo existe
+        await fs.access(filePath);
+    } catch (error) {
+        // Se o arquivo não existir, cria um novo com o conteúdo fornecido
+        await fs.writeFile(filePath, content + '\n');
+        console.log(`Arquivo criado: ${filePath}`);
+        return;
+    }
+
+    // Se o arquivo já existir, adiciona o conteúdo na linha de baixo
+    await fs.appendFile(filePath, content + '\n');
+    console.log(`Conteúdo adicionado ao arquivo: ${filePath}`);
 }
 
 (async () => {
@@ -87,7 +95,7 @@ function baixa_mp4(url, nome_saida="")
 
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        userDataDir: 'C:\\sessao',
+        userDataDir: 'sessao',
         headless: false
     });
 
