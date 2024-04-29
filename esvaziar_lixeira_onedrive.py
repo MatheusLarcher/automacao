@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import getpass
+from selenium.common.exceptions import TimeoutException
 
 def verificar_tela_login(driver):
     time.sleep(2)
@@ -38,7 +39,7 @@ def esvaziar_lixeira(headless = False):
     driver.get("https://2dconsultorescombr-my.sharepoint.com/personal/jean_2dconsultores_com_br/_layouts/15/onedrive.aspx?view=5")
 
     
-    if(verificar_lixeira_vazia(driver)):
+    if(verificar_lixeira_vazia(driver, 2)):
         return
     
     
@@ -50,7 +51,7 @@ def esvaziar_lixeira(headless = False):
     selector = "#appRoot > div > div:nth-child(3) > div.od-OverlayHost > div > div > div.od-Dialog.od-Dialog--close > div.od-Dialog-main.od-Dialog-main--sm.od-Dialog-main-style--normal.od-Dialog-main--allowPanel.od-Dialog-main--dialog.od-Dialog-main--visible > div > div > div.od-Dialog-inner > div.od-Dialog-actions > div > button:nth-child(1)"
     clicar_botao(driver, selector)
     
-    if(verificar_lixeira_vazia(driver)):
+    if(verificar_lixeira_vazia(driver, 90)):
         driver.close()
     
     print("sucesso.")
@@ -61,13 +62,12 @@ def clicar_botao(driver, selector, timeout = 10):
     )
     button.click()
 
-def verificar_lixeira_vazia(driver):
-    time.sleep(2)
+def verificar_lixeira_vazia(driver, timeout=10):
     selector = "#appRoot > div > div.body_68bb4b5e.ready_68bb4b5e > div > div > div.core_68bb4b5e > div.view_68bb4b5e > main > div > div > div > div > div.StandaloneList-content.is-active > div > div.EmptyFolder > div:nth-child(1)"
-    elements = driver.find_elements(By.CSS_SELECTOR, selector)
-    if len(elements) > 0:
+    try:
+        WebDriverWait(driver, timeout).until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
         return True
-    else:
+    except TimeoutException:
         return False
     
 if __name__ == "__main__":
