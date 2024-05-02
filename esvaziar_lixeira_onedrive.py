@@ -48,8 +48,10 @@ def esvaziar_lixeira(headless = False):
     clicar_botao(driver, selector, 10)
     
     #botao confirmar
-    selector = "#appRoot > div > div:nth-child(3) > div.od-OverlayHost > div > div > div.od-Dialog.od-Dialog--close > div.od-Dialog-main.od-Dialog-main--sm.od-Dialog-main-style--normal.od-Dialog-main--allowPanel.od-Dialog-main--dialog.od-Dialog-main--visible > div > div > div.od-Dialog-inner > div.od-Dialog-actions > div > button:nth-child(1)"
-    clicar_botao(driver, selector)
+    #selector = "#appRoot > div > div:nth-child(3) > div.od-OverlayHost > div > div > div.od-Dialog.od-Dialog--close > div.od-Dialog-main.od-Dialog-main--sm.od-Dialog-main-style--normal.od-Dialog-main--allowPanel.od-Dialog-main--dialog.od-Dialog-main--visible > div > div > div.od-Dialog-inner > div.od-Dialog-actions > div > button:nth-child(1)"
+    #clicar_botao(driver, selector)
+
+    clicar_botao_descricao(driver, "Sim")
     
     if(verificar_lixeira_vazia(driver, 90)):
         driver.close()
@@ -62,6 +64,16 @@ def clicar_botao(driver, selector, timeout = 10):
     )
     button.click()
 
+def clicar_botao_descricao(driver, descricao_botao, timeout=10):
+    try:
+        # Procura o botão pelo texto do label que é "Sim".
+        botao_confirmar = WebDriverWait(driver, timeout).until(
+            EC.element_to_be_clickable((By.XPATH, f"//button[.//span[contains(text(), '{descricao_botao}')]]")))
+        botao_confirmar.click()
+        return True
+    except TimeoutException:
+        return False
+    
 def verificar_lixeira_vazia(driver, timeout=10):
     selector = "#appRoot > div > div.body_68bb4b5e.ready_68bb4b5e > div > div > div.core_68bb4b5e > div.view_68bb4b5e > main > div > div > div > div > div.StandaloneList-content.is-active > div > div.EmptyFolder > div:nth-child(1)"
     try:
