@@ -141,7 +141,7 @@ def obter_data_att(workspace, empresa):
         
         seletor = "text.value"
         valor = obter_valor_dt_att(driver, seletor)
-        fechar_bi_barra_esquerda(driver, driver)
+        fechar_bi_barra_esquerda(driver)
         return valor
     except Exception as e:
         return f"Erro ao obter data"
