@@ -45,7 +45,7 @@ def esvaziar_lixeira(headless = False):
     
     #botao Esvaziar lixeira
     selector = 'button[aria-label="Esvaziar lixeira"]'
-    clicar_botao(driver, selector, 10)
+    clicar_botao(driver, selector, 90)
     
     #botao confirmar
     #selector = "#appRoot > div > div:nth-child(3) > div.od-OverlayHost > div > div > div.od-Dialog.od-Dialog--close > div.od-Dialog-main.od-Dialog-main--sm.od-Dialog-main-style--normal.od-Dialog-main--allowPanel.od-Dialog-main--dialog.od-Dialog-main--visible > div > div > div.od-Dialog-inner > div.od-Dialog-actions > div > button:nth-child(1)"
